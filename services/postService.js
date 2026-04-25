@@ -22,6 +22,14 @@ async function createPost({ title, content, authorId }) {
 }
 
 async function publishPostById(id) {
+  const existingPost = await prisma.post.findUnique({
+    where: { id },
+  });
+
+  if (!existingPost) {
+    return null;
+  }
+
   return prisma.post.update({
     where: { id },
     data: { published: true },

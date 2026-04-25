@@ -73,6 +73,10 @@ async function publishPost(req, res) {
     }
 
     const post = await postService.publishPostById(id);
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
     res.json({ message: 'Post published', post });
   } catch (err) {
     console.error(err);

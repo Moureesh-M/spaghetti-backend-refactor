@@ -41,6 +41,14 @@ async function createUser({ firstName, lastName, email }) {
 }
 
 async function deactivateUserById(id) {
+  const existingUser = await prisma.user.findUnique({
+    where: { id },
+  });
+
+  if (!existingUser) {
+    return null;
+  }
+
   return prisma.user.update({
     where: { id },
     data: { isActive: false },

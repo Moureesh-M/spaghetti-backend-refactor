@@ -62,6 +62,10 @@ async function deactivateUser(req, res) {
     }
 
     const user = await userService.deactivateUserById(id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
     res.json({ message: 'User deactivated', user });
   } catch (err) {
     console.error(err);
